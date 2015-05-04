@@ -31,8 +31,8 @@ arrays before converting it to a hash.
 Example:
 
 Query String:
-  user[address][street]=main&user[address][zip]=89436
+  user`[address][street]=main&user[address][zip]=89436`
 URI Decoder:
-  [["user[address][street]", "main"], ["user[address][zip]", "89436"]]
+  `[["user[address][street]", "main"], ["user[address][zip]", "89436"]]`
 Returns:
   { "user" => { "address" => { "street" => "main", "zip" => "89436" } } }
