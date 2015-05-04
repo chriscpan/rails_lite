@@ -1,20 +1,35 @@
-# w5d2: [Rails Lite!][description]
+# Rails Lite!
 
-## Using The Specs
+## Description
 
-Some specs have been written to guide you towards the lite. There are
-rspec specs in the `spec` directory and demo servers for you to try
-in the `bin` directory.
+Rails Lite mimics the basic functionality found in Ruby on Rails! This is done
+by using the WEBrick gem as a method to mount a server. Specifically,
+the basic functionalities created in this project are ApplicationController::Base,
+the Router, as well as the fundamental params and session behaviors.  
 
-## Suggested Order
 
-0.  `bundle exec rspec spec/p02_controller_spec.rb`
-0.  `bundle exec rspec spec/p03_template_spec.rb`
-0.  `bundle exec rspec spec/p04_session_spec.rb`
-0.  `bundle exec rspec spec/p05_params_spec.rb`
-0.  `bundle exec rspec spec/p06_router_spec.rb`
-0.  `bundle exec rspec spec/p07_integration_spec.rb`
+#### Router Method
+Router#draw takes a block. For example:
 
-Run `bundle exec rspec` to run all the spec files.
+```ruby
+router = Router.new
+router.draw do
+  get Regexp.new("^/users/?$"), UsersController, :index
+  get Regexp.new("^/users/(?<user_id>\\d+)/posts/?$"), PostsController, :index
+end
+```
+Allows the block to contain a series of method calls to create the four HTTP
+methods.
 
-[description]: https://github.com/appacademy/rails-curriculum/blob/master/projects/w5d2-rails-lite-i.md
+#### Param Method
+Params#parse_www_encoded_form(www_encoded_form)
+
+Takes in a query string from the address bars and parses the string to create
+a deeply nested hash. Utilizes the URI method to first split the query into
+arrays before converting it to a hash.
+
+Example:
+
+Query String: "user[address][street]=main&user[address][zip]=89436"
+URI Decoder: [["user[address][street]", "main"], ["user[address][zip]", "89436"]]
+Returns: { "user" => { "address" => { "street" => "main", "zip" => "89436" } } }
